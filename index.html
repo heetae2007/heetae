@@ -1,11 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>감자마켓</title>
+
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/home.css">
 </head>
+
 <body>
-    <h1>hello world!</h1>
+
+    <!-- Header -->
+    <header class="header">
+
+        <div class="header-inner">
+
+            <a href="./index.html" class="logo">
+                <span aria-hidden="true">🥔</span> 감자마켓
+            </a>
+
+            <div class="location">
+                개발자 감자
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero">
+
+            <h1>
+                <span aria-hidden="true">🥔</span> 감자마켓에서<br>
+                <strong>저의 <span id="rotatingKeyword"></span>에 대해 찾고 계신가요?</strong>
+            </h1>
+
+            <div class="search-box" role="search">
+
+                <label for="searchInput" class="sr-only">검색어 입력</label>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="검색어를 입력해주세요"
+                >
+
+                <button id="searchButton" aria-label="검색">
+                    →
+                </button>
+
+            </div>
+
+
+            <!-- 인기검색어 -->
+            <div class="popular-search">
+
+                <span class="popular-title">
+                    인기검색어
+                </span>
+
+                <button class="keyword" data-keyword="프로젝트">
+                    프로젝트
+                </button>
+
+                <button class="keyword" data-keyword="GitHub">
+                    GitHub
+                </button>
+
+                <button class="keyword" data-keyword="경력">
+                    경력
+                </button>
+
+                <button class="keyword" data-keyword="About">
+                    About
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Banner -->
+        <section class="banner">
+
+            <div class="banner-character" aria-hidden="true">
+                🥔
+            </div>
+
+        </section>
+
+
+        <!-- Category -->
+        <section class="category">
+
+            <a href="./projects.html" class="category-item">
+
+                <div class="category-icon" aria-hidden="true">
+                    💻
+                </div>
+
+                <span>
+                    프로젝트
+                </span>
+
+            </a>
+
+
+            <a href="./career.html" class="category-item">
+
+                <div class="category-icon" aria-hidden="true">
+                    📚
+                </div>
+
+                <span>
+                    경력
+                </span>
+
+            </a>
+
+
+            <a href="./about.html" class="category-item">
+
+                <div class="category-icon" aria-hidden="true">
+                    👤
+                </div>
+
+                <span>
+                    About
+                </span>
+
+            </a>
+
+
+            <a href="./contact.html" class="category-item">
+
+                <div class="category-icon" aria-hidden="true">
+                    📧
+                </div>
+
+                <span>
+                    연락처
+                </span>
+
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+
+        <a href="./index.html" class="active">
+            <span aria-hidden="true">🏠</span>
+            <small>홈</small>
+        </a>
+
+        <a href="./projects.html">
+            <span aria-hidden="true">💻</span>
+            <small>프로젝트</small>
+        </a>
+
+        <a href="./about.html">
+            <span aria-hidden="true">👤</span>
+            <small>나</small>
+        </a>
+
+    </nav>
+
+
+    <script src="./js/search.js"></script>
+
 </body>
 </html>
