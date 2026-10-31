@@ -1,0 +1,74 @@
+---
+import Base from "../layouts/Base.astro";
+import PageTop from "../components/PageTop.astro";
+import Detail from "../components/Detail.astro";
+import { getTimeline, month, fullDate } from "../lib/projects.js";
+import { url } from "../lib/url.js";
+import jobs from "../data/career.json";
+
+const timeline = await getTimeline();
+---
+<Base title="경력 | 감자마켓" description="GitHub 첫 커밋부터 지금까지, 개발자 감자의 작업 이력.">
+
+    <PageTop current="경력" title="경력" intro={`GitHub에 첫 커밋을 남긴 ${month(timeline[0].data.started)}부터, 반복 업무를 하나씩 덜어낸 이력입니다.`} />
+
+    <main>
+
+        <section class="poster" aria-labelledby="career-title" style="margin-top: clamp(64px, 8vw, 128px)">
+
+            <h2 class="head" id="career-title" data-reveal>한눈에 보기</h2>
+
+            <ol class="poster-list">
+                {timeline.map((p, i) => (
+                    <li data-reveal style={`--i:${i}`}><a href={`#c-${p.id}`} class="item">{p.data.short}</a><span class="when">{month(p.data.started)}</span></li>
+                ))}
+            </ol>
+
+        </section>
+
+
+        {jobs.length > 0 && (
+            <section class="section" aria-labelledby="jobs-title">
+
+                <h2 class="head" id="jobs-title" data-reveal style="margin-bottom: clamp(32px, 4vw, 56px)">일한 곳</h2>
+
+                <div class="about-row jobs">
+                    {jobs.map((job) => (
+                        <>
+                            <p class="record-word" data-reveal>{job.period}</p>
+                            <div data-reveal>
+                                <h3 class="job-title">{job.company}, {job.role}</h3>
+                                {job.summary && <p>{job.summary}</p>}
+                                {job.did?.length > 0 && <ul class="facts-list">{job.did.map((d) => <li>{d}</li>)}</ul>}
+                            </div>
+                        </>
+                    ))}
+                </div>
+
+            </section>
+        )}
+
+
+        <section class="section" aria-labelledby="months-title">
+
+            <h2 class="head" id="months-title" data-reveal style="margin-bottom: clamp(48px, 6vw, 96px)">달마다 올린 것</h2>
+
+            <div class="details">
+                {timeline.map((p, i) => (
+                    <Detail
+                        id={`c-${p.id}`}
+                        flip={i % 2 === 1}
+                        screen={p.data.career.screen ?? p.data.screen}
+                        title={`${month(p.data.started)}, ${p.data.short}`}
+                        meta={`${fullDate(p.data.started)} ${p.data.repo ? p.data.repo.split("/").pop() : p.data.title} 시작${p.data.status === "만드는 중" ? " · 만드는 중" : ""}`}
+                        body={p.data.career.note}
+                        link={[url(`projects.html#${p.id}`), `${p.data.title} 자세히 보기`]}
+                    />
+                ))}
+            </div>
+
+        </section>
+
+    </main>
+
+</Base>

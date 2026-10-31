@@ -1,0 +1,55 @@
+---
+import Base from "../layouts/Base.astro";
+import PageTop from "../components/PageTop.astro";
+import Scatter from "../components/Scatter.astro";
+import { url } from "../lib/url.js";
+
+const issue = "https://github.com/heetae2007/heetae/issues/new";
+const asks = [
+    { meta: "공지 감시", screen: "telegram", title: "여러 곳의 공지를 한 곳으로", desc: "매일 새로고침하는 게시판이 있다면, 새 글만 메신저로 받게 만들 수 있습니다.", href: url("projects.html#hira") },
+    { meta: "시트 정리", screen: "sheet", title: "흩어진 시트를 한 표로", desc: "탭마다 나뉜 기록을 모아 노션이나 다른 시트 하나로 맞춥니다.", href: url("projects.html#notion") },
+    { meta: "티켓 분류", screen: "zendesk", title: "반복 문의는 먼저 분류", desc: "자주 들어오는 문의에 태그를 붙여, 사람이 답할 티켓만 남깁니다.", href: url("projects.html#zendesk") },
+    { meta: "기록 남기기", screen: "poll", title: "실패해도 기록은 남게", desc: "자동화가 언제 돌았고 무엇을 했는지 표로 남겨, 문제가 생겨도 바로 확인합니다.", href: url("about.html") },
+];
+---
+<Base title="연락처 | 감자마켓" description="개발자 감자에게 연락하는 방법. GitHub heetae2007, 또는 저장소 이슈로 자동화하고 싶은 일을 남겨주세요.">
+
+    <PageTop current="연락처" title="연락처" intro="자동화하고 싶은 반복 업무가 있다면 GitHub 이슈로 남겨주세요.">
+        <p data-rise style="--i:2">어떤 화면을 매일 몇 번 여는지 적어주시면 가장 좋습니다. 아래 어느 곳으로든 연락하실 수 있습니다.</p>
+    </PageTop>
+
+    <main>
+
+        <section class="section" aria-labelledby="where-title" style="padding-top: clamp(48px, 5vw, 80px)">
+
+            <h2 class="head" id="where-title" data-reveal>찾아오는 곳</h2>
+
+            <div class="rows">
+                <a class="row" href="https://github.com/heetae2007">GitHub heetae2007</a>
+                <a class="row" href={issue}>이슈로 문의하기</a>
+                <a class="row" href="https://github.com/heetae2007/heetae">이 사이트의 소스</a>
+                <a class="row greet" href={issue}>안녕하세요
+                    <span class="round" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></span>
+                </a>
+            </div>
+
+        </section>
+
+
+        <section class="section" aria-labelledby="ask-title">
+
+            <h2 class="head" id="ask-title" data-reveal style="margin-bottom: clamp(48px, 6vw, 96px)">이런 일을 맡겨주세요</h2>
+
+            <Scatter items={asks} remark="매일 같은 화면을 여는 일이라면,<br>대부분 자동화할 수 있습니다.">
+                <Fragment slot="next">
+                    <h3>목록에 없는 일</h3>
+                    <p>여기 없는 일이라도 괜찮습니다. 지금 어떻게 하고 있는지만 적어주시면, 덜어낼 수 있는 부분을 찾아보겠습니다.</p>
+                    <a href={issue} class="button">이슈로 문의하기</a>
+                </Fragment>
+            </Scatter>
+
+        </section>
+
+    </main>
+
+</Base>

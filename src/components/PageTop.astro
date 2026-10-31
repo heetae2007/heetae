@@ -1,0 +1,24 @@
+---
+// 안쪽 페이지의 머리: 작은 이름 띠 + 메뉴, 큰 제목 + 소개 문장
+import Nav from "./Nav.astro";
+import { url } from "../lib/url.js";
+
+const { current, title, intro } = Astro.props;
+---
+<header class="tiles top">
+
+    <div class="band band--small">
+        <a href={url("index.html")} class="band__name">감자마켓</a>
+    </div>
+
+    <Nav current={current} />
+
+</header>
+
+<section class="page-hero" aria-labelledby="page-title">
+    <h1 id="page-title"><span class="ch" data-rise style="--i:0">{title}</span></h1>
+    <div class="intro">
+        <p class="statement" data-rise style="--i:1">{intro}</p>
+        <slot />
+    </div>
+</section>

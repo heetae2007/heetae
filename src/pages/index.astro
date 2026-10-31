@@ -1,0 +1,227 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Search from "../components/Search.astro";
+import Scatter from "../components/Scatter.astro";
+import Telegram from "../components/screens/Telegram.astro";
+import { getProjects, getTimeline, month, fullDate } from "../lib/projects.js";
+import { url } from "../lib/url.js";
+
+const projects = await getProjects();
+const timeline = await getTimeline();
+const first = timeline[0].data.started;
+const issue = "https://github.com/heetae2007/heetae/issues/new";
+
+const items = projects.map((p) => ({
+    meta: `${p.data.language} · ${month(p.data.started)} · ${p.data.status}`,
+    title: p.data.title,
+    desc: p.data.summary,
+    href: url(`projects.html#${p.id}`),
+    screen: p.data.cover ?? p.data.screen,
+    tags: [p.data.title, ...p.data.stack, ...p.data.tags],
+}));
+
+const tools = [
+    ["Python", "알리미, Zendesk"],
+    ["Playwright", "알리미"],
+    ["SQLite", "알리미"],
+    ["Telegram Bot", "알리미"],
+    ["Google Apps Script", "노션 동기화"],
+    ["Notion API", "노션 동기화"],
+    ["cron, flock", "Ubuntu 서버"],
+];
+const day = (d) => d.toISOString().slice(0, 10).replaceAll("-", ". ");
+---
+<Base title="감자마켓 | 개발자 감자의 업무 자동화 작업" description="병원 행정의 반복 업무를 코드로 덜어내는 개발자 감자(heetae2007)의 작업을 매물처럼 올려둔 곳입니다.">
+
+    <!-- Hero: name band and rails -->
+    <header class="hero">
+
+        <div class="tiles">
+
+            <div class="band">
+                <h1>
+                    <a href={url("index.html")} class="band__name" aria-label="감자마켓, 개발자 감자의 업무 자동화 작업">
+                        {["감", "자", "마", "켓"].map((ch, i) => <span class="ch" style={`--i:${i}`}>{ch}</span>)}
+                    </a>
+                </h1>
+            </div>
+
+            <Nav />
+
+        </div>
+
+
+        <div class="rails">
+
+            <div class="rail-left">
+
+                <div class="tile-potato">
+                    <svg viewBox="0 0 200 160" role="img" aria-label="감자마켓의 감자">
+                        <path d="M38 52c14-26 52-38 88-34 34 4 58 22 62 48 4 28-12 58-48 70-34 12-80 10-104-8C12 112 22 80 38 52z" fill="#a8865d"/>
+                        <path d="M52 118c22 14 62 16 92 6 22-8 36-24 40-42-6 30-30 50-60 56-30 6-56 0-72-20z" fill="#94744f"/>
+                        <ellipse cx="72" cy="58" rx="5" ry="3.5" fill="#6f5539"/>
+                        <ellipse cx="128" cy="44" rx="4" ry="3" fill="#6f5539"/>
+                        <ellipse cx="150" cy="86" rx="5" ry="3.5" fill="#6f5539"/>
+                        <ellipse cx="98" cy="96" rx="4.5" ry="3" fill="#6f5539"/>
+                        <ellipse cx="56" cy="96" rx="3.5" ry="2.5" fill="#6f5539"/>
+                    </svg>
+                </div>
+
+                <dl class="facts" data-rise style="--i:1">
+                    <div><dt>하는 일</dt><dd>업무 자동화</dd></div>
+                    <div><dt>분야</dt><dd>병원 행정</dd></div>
+                    <div><dt>주로 쓰는 것</dt><dd>Python, Apps Script</dd></div>
+                    <div><dt>첫 커밋</dt><dd class="nums">{fullDate(first)}</dd></div>
+                    <div><dt>올린 매물</dt><dd class="nums">{projects.length}건</dd></div>
+                </dl>
+
+            </div>
+
+
+            <div class="rail-centre">
+
+                <div class="stage">
+                    <Telegram live compact class="drift" />
+                </div>
+
+                <div class="statement-tile">
+                    <p class="statement" data-rise style="--i:0">
+                        병원 행정의 반복 업무를 코드로 덜어내는 개발자 감자의 작업을 매물처럼 올려두었습니다.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="rail-right">
+                <p data-rise style="--i:2">심평원 공지를 5분마다 확인</p>
+                <p data-rise style="--i:3">새 글만 텔레그램으로</p>
+                <p data-rise style="--i:4">티켓번호로 시트와 노션을 맞춤</p>
+                <p data-rise style="--i:5">Zendesk 자동화는 만드는 중</p>
+                <a href="#work" class="rail-action" data-rise style="--i:6">매물 둘러보기</a>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- Work: loose scatter -->
+        <section class="section" id="work" aria-labelledby="work-title">
+
+            <div class="section-head">
+                <h2 class="head" id="work-title" data-reveal>올라온 매물</h2>
+                <Search count={projects.length} />
+            </div>
+
+            <Scatter items={items} remark="사람이 새로고침하던 일을,<br>이제 서버가 5분마다 합니다.">
+                <Fragment slot="next">
+                    <h3>다음 매물</h3>
+                    <p>병원 일을 하다 보면 매일 같은 화면을 여는 일이 생깁니다. 그런 일이 있다면 이슈로 남겨주세요. 다음 매물로 만들어 올리겠습니다.</p>
+                    <a href={issue} class="button">이슈로 문의하기</a>
+                </Fragment>
+            </Scatter>
+
+            <p class="no-result" hidden>찾는 매물이 아직 없습니다. 다른 말로 찾아보거나 <a href={url("contact.html")} class="link">만들어 달라고 말씀해주세요</a>.</p>
+
+        </section>
+
+
+        <!-- About: side facts, wide paragraph -->
+        <section class="section" id="about" aria-labelledby="about-title">
+
+            <h2 class="head" id="about-title" data-reveal style="margin-bottom: clamp(32px, 4vw, 56px)">감자 소개</h2>
+
+            <div class="about-row">
+
+                <dl class="side-facts" data-reveal style="--i:1">
+                    <div><dt>이름</dt><dd>감자 (heetae2007)</dd></div>
+                    <div><dt>일하는 곳</dt><dd>병원과 심평원 사이</dd></div>
+                    <div><dt>일하는 방식</dt><dd>쓰던 도구는 그대로</dd></div>
+                </dl>
+
+                <div>
+                    <p class="wide-para" data-reveal style="--i:2">
+                        병원 행정에는 매일 확인해야 하는 고시, 시트에 쌓이는 요청, 답해야 할 티켓이 있습니다.
+                        감자는 그중 반복되는 부분을 하나씩 코드로 옮깁니다.
+                        새 시스템을 들이기보다 지금 쓰는 시트, 노션, 텔레그램을 그대로 두고 그 사이를 잇습니다.
+                    </p>
+                    <p data-reveal style="--i:3; margin-top: 24px"><a href={url("about.html")} class="link">소개 더 보기</a></p>
+                </div>
+
+            </div>
+
+            <div class="about-row">
+
+                <p class="record-word" data-reveal>기록</p>
+
+                <div class="records" data-reveal style="--i:1">
+
+                    <div>
+                        <h3>다룬 도구</h3>
+                        <ul class="records-list">
+                            {tools.map(([name, where]) => <li><span>{name}</span><span>{where}</span></li>)}
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3>올린 저장소</h3>
+                        <ul class="records-list">
+                            {timeline.filter((p) => p.data.repo).map((p) => (
+                                <li><a href={p.data.repo} class="link">{p.data.repo.split("/").pop()}</a><span class="nums">{day(p.data.started)}</span></li>
+                            ))}
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Career: poster lines -->
+        <section class="poster" id="career" aria-labelledby="career-title">
+
+            <h2 class="head" id="career-title" data-reveal>경력</h2>
+
+            <ol class="poster-list">
+                {timeline.map((p, i) => (
+                    <li data-reveal style={`--i:${i}`}><a href={url(`career.html#c-${p.id}`)} class="item">{p.data.short}</a><span class="when">{month(p.data.started)}</span></li>
+                ))}
+            </ol>
+
+        </section>
+
+
+        <!-- Signature: marquee -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee__track">
+                <p>심평원 공지 확인 중&emsp;시트와 노션 맞추는 중&emsp;Zendesk 자동화 만드는 중&emsp;</p>
+                <p>심평원 공지 확인 중&emsp;시트와 노션 맞추는 중&emsp;Zendesk 자동화 만드는 중&emsp;</p>
+            </div>
+        </div>
+
+
+        <!-- Contact: address in display rows -->
+        <section class="section" id="contact" aria-labelledby="contact-title" style="padding-top: 0">
+
+            <h2 class="head" id="contact-title" data-reveal>연락처</h2>
+
+            <div class="rows">
+                <a class="row" href="https://github.com/heetae2007">GitHub heetae2007</a>
+                <a class="row" href={issue}>이슈로 문의하기</a>
+                <a class="row" href="https://github.com/heetae2007/heetae">이 사이트의 소스</a>
+                <a class="row greet" href={url("contact.html")}>안녕하세요
+                    <span class="round" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h11M10 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg></span>
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+</Base>

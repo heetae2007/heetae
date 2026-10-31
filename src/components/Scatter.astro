@@ -1,0 +1,40 @@
+---
+// 매물 배치: [왼쪽 넓게, 오른쪽 좁게] → [가운데 넓게] 를 반복합니다.
+// items: { meta, title, desc, href, screen, tags } · remark: 첫 줄 다음에 들어가는 두 줄 문장
+// 마지막 칸은 <slot name="next" />가 채웁니다.
+import Screen from "./Screen.astro";
+
+const { items, remark } = Astro.props;
+const hasNext = Astro.slots.has("next");
+const cells = [...items, ...(hasNext ? [{ next: true }] : [])];
+
+const rows = [];
+for (let i = 0; i < cells.length; ) {
+    if (rows.length % 2 === 0) { rows.push(cells.slice(i, i + 2)); i += 2; }
+    else { rows.push(cells.slice(i, i + 1)); i += 1; }
+}
+const place = (r, c) => (r % 2 === 1 ? "p-c" : c === 0 ? "p-a" : "p-b");
+---
+<div class="scatter">
+    {rows.map((row, r) => (
+        <>
+            <div class="srow">
+                {row.map((item, c) => item.next ? (
+                    <div class:list={["next", place(r, c)]} data-reveal>
+                        <slot name="next" />
+                    </div>
+                ) : (
+                    <article class:list={["listing", place(r, c)]} data-tags={item.tags?.join(" ")}>
+                        <p class="meta">{item.meta}</p>
+                        <div class="frame" data-reveal>
+                            <Screen name={item.screen} />
+                        </div>
+                        <h3><a href={item.href} class="link">{item.title}</a></h3>
+                        <p class="desc">{item.desc}</p>
+                    </article>
+                ))}
+            </div>
+            {r === 0 && remark && <p class="remark" data-reveal set:html={remark} />}
+        </>
+    ))}
+</div>

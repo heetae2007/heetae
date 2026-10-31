@@ -1,0 +1,27 @@
+---
+// 상세 행: 화면 조각과 글을 나란히. flip이면 좌우가 바뀝니다.
+import Screen from "./Screen.astro";
+
+const { id, flip = false, screen, live = false, title, meta, body, facts = [], link, listing = false, part = false, tags = [] } = Astro.props;
+---
+<article
+    class:list={["detail", { flip, listing, part }]}
+    id={id}
+    data-tags={listing ? tags.join(" ") : undefined}
+>
+    <div class="frame" data-reveal>
+        <Screen name={screen} live={live} />
+    </div>
+    <div class="text">
+        <h3 class="head-s" data-reveal>{title}</h3>
+        {meta && <p class="meta" data-reveal style="--i:1">{meta}</p>}
+        {body && <p data-reveal style="--i:2">{body}</p>}
+        {Astro.slots.has("default") && <div class="prose" data-reveal style="--i:2"><slot /></div>}
+        {facts.length > 0 && (
+            <ul class="facts-list" data-reveal style="--i:3">
+                {facts.map((f) => <li>{f}</li>)}
+            </ul>
+        )}
+        {link && <p data-reveal style="--i:4"><a href={link[0]} class="link">{link[1]}</a></p>}
+    </div>
+</article>

@@ -1,0 +1,76 @@
+---
+import { render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PageTop from "../components/PageTop.astro";
+import Search from "../components/Search.astro";
+import Detail from "../components/Detail.astro";
+import { getProjects, fullDate } from "../lib/projects.js";
+import { url } from "../lib/url.js";
+
+const projects = await Promise.all(
+    (await getProjects()).map(async (p) => ({ ...p, Content: (await render(p)).Content })),
+);
+const count = ["한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열"][projects.length - 1] ?? projects.length;
+
+// 프로젝트 행과 보조 행을 번갈아 좌우로 놓습니다.
+let row = 0;
+const flip = () => row++ % 2 === 1;
+const rows = projects.map((p) => ({
+    p,
+    flip: flip(),
+    parts: p.data.parts.map((part) => ({ part, flip: flip() })),
+}));
+---
+<Base title="프로젝트 | 감자마켓" description={`${projects.map((p) => p.data.title).join(", ")}. 개발자 감자가 만든 업무 자동화 도구.`}>
+
+    <PageTop current="프로젝트" title="프로젝트" intro={`병원 행정에서 매일 반복되던 일을 하나씩 코드로 옮긴 기록입니다. 지금 올라온 매물은 ${count} 건입니다.`} />
+
+    <main>
+
+        <section class="section" aria-labelledby="list-title">
+
+            <div class="section-head">
+                <h2 class="head" id="list-title" data-reveal>매물 {count} 건</h2>
+                <Search count={projects.length} />
+            </div>
+
+            <div class="details">
+                {rows.map(({ p, flip, parts }) => (
+                    <>
+                        <Detail
+                            id={p.id}
+                            flip={flip}
+                            listing
+                            tags={[p.data.title, ...p.data.stack, ...p.data.tags]}
+                            screen={p.data.screen}
+                            live={p.data.screen === "telegram"}
+                            title={p.data.title}
+                            meta={`${p.data.stack.join(", ")} · ${fullDate(p.data.started)} 시작${p.data.status === "만드는 중" ? " · 만드는 중" : ""}`}
+                            link={p.data.repo && [p.data.repo, `GitHub에서 ${p.data.repo.split("/").pop()} 보기`]}
+                        >
+                            <p.Content />
+                        </Detail>
+                        {parts.map(({ part, flip }) => (
+                            <Detail
+                                flip={flip}
+                                listing
+                                part
+                                tags={[part.title, ...part.tags, ...p.data.tags]}
+                                screen={part.screen}
+                                title={part.title}
+                                meta={part.meta}
+                                body={part.body}
+                                facts={part.facts}
+                            />
+                        ))}
+                    </>
+                ))}
+            </div>
+
+            <p class="no-result" hidden>찾는 매물이 아직 없습니다. 다른 말로 찾아보거나 <a href={url("contact.html")} class="link">만들어 달라고 말씀해주세요</a>.</p>
+
+        </section>
+
+    </main>
+
+</Base>

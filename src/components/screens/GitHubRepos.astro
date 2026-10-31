@@ -1,0 +1,22 @@
+---
+// 저장소 목록은 프로젝트 Markdown에서 만들어집니다.
+import { getCollection } from "astro:content";
+
+const colours = { Python: "#3572a5", "Apps Script": "#e3b341", "HTML, CSS, JS": "#e34c26" };
+const repos = (await getCollection("projects"))
+    .filter((p) => p.data.repo)
+    .sort((a, b) => b.data.started.getTime() - a.data.started.getTime());
+const day = (d) => d.toISOString().slice(0, 10);
+---
+<div data-ui class="gh" aria-label="GitHub heetae2007의 공개 저장소 목록">
+    <div class="gh-head">heetae2007 저장소<span>공개 {repos.length}개</span></div>
+    {repos.map((p) => (
+        <div class="gh-repo">
+            <a href={p.data.repo}>{p.data.repo.split("/").pop()}</a>
+            <p>
+                <span><i class="dot" style={`background:${colours[p.data.language] ?? "#8b949e"}`}></i>{p.data.language}</span>
+                <span>{day(p.data.started)} 시작</span>
+            </p>
+        </div>
+    ))}
+</div>
