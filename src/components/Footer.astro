@@ -1,0 +1,33 @@
+---
+import { url } from "../lib/url.js";
+
+const issue = "https://github.com/heetae2007/heetae/issues/new";
+---
+<footer class="footer">
+
+    <div class="top-row">
+
+        <div class="invite">
+            <h2>반복 업무,<br>내놓으세요</h2>
+            <a href={issue} class="button">이슈로 문의하기</a>
+        </div>
+
+        <nav class="links" aria-label="바닥 메뉴">
+            <a href={url("index.html")} class="link">처음으로</a>
+            <a href={url("projects.html")} class="link">프로젝트</a>
+            <a href={url("career.html")} class="link">경력</a>
+            <a href="https://github.com/heetae2007" class="link">GitHub</a>
+        </nav>
+
+    </div>
+
+    <div></div>
+
+    <div class="legal">
+        <span>© {new Date().getFullYear()} 감자마켓, heetae2007</span>
+        <a href="https://github.com/heetae2007/heetae" class="link">이 사이트의 소스</a>
+    </div>
+
+    <div class="mark" aria-hidden="true">감자마켓</div>
+
+</footer>

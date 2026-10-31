@@ -1,0 +1,25 @@
+---
+// 이름으로 화면 조각 하나를 고릅니다. (프로젝트 Markdown의 screen 값)
+import Telegram from "./screens/Telegram.astro";
+import Board from "./screens/Board.astro";
+import Sheet from "./screens/Sheet.astro";
+import Notion from "./screens/Notion.astro";
+import Zendesk from "./screens/Zendesk.astro";
+import FirstVersion from "./screens/FirstVersion.astro";
+import GitHubRepos from "./screens/GitHubRepos.astro";
+import PollLog from "./screens/PollLog.astro";
+
+const { name, ...rest } = Astro.props;
+const screens = {
+  telegram: Telegram,
+  board: Board,
+  sheet: Sheet,
+  notion: Notion,
+  zendesk: Zendesk,
+  v1: FirstVersion,
+  github: GitHubRepos,
+  poll: PollLog,
+};
+const Component = screens[name];
+---
+<Component {...rest} />

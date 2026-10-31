@@ -1,0 +1,20 @@
+---
+// 매물 검색: 입력하는 대로 .listing을 거르고, 페이지 이름 + Enter는 그 페이지로 이동 (js/site.js)
+const { count } = Astro.props;
+const suggestions = ["텔레그램", "노션", "Python", "병원"];
+---
+<form class="search" data-search role="search" data-reveal style="--i:1">
+
+    <label for="q">매물 검색</label>
+
+    <input id="q" type="search" placeholder="텔레그램, 노션, Python…" autocomplete="off">
+
+    <button type="submit" class="button">찾기</button>
+
+    <p class="search-count" aria-live="polite">매물 {count}건</p>
+
+    <div class="suggest">
+        {suggestions.map((q) => <button type="button" data-q={q} aria-pressed="false">{q}</button>)}
+    </div>
+
+</form>

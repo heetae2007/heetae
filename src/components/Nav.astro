@@ -1,0 +1,16 @@
+---
+import { url } from "../lib/url.js";
+
+const { current } = Astro.props;
+const links = [
+    ["projects.html", "프로젝트"],
+    ["career.html", "경력"],
+    ["about.html", "소개"],
+    ["contact.html", "연락처"],
+];
+---
+<nav class="navrow" aria-label="주요 메뉴">
+    {links.map(([href, label]) => (
+        <a href={url(href)} aria-current={label === current ? "page" : undefined}>{label}</a>
+    ))}
+</nav>

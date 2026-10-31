@@ -1,0 +1,35 @@
+---
+// live: 마지막 알림이 주기적으로 다시 도착 / compact: 첫 화면용, 두 건만
+const { live = false, compact = false, class: extra = "" } = Astro.props;
+---
+<div data-ui class:list={["tg", extra]} data-tg-live={live ? "" : undefined} aria-label="심평원 고시 알리미가 텔레그램으로 보낸 새 공지 알림">
+    <div class="tg-bar">
+        <div class="tg-av">심</div>
+        <div>
+            <div class="tg-name">심평원 고시 알리미</div>
+            <div class="tg-sub">봇 · 5분마다 확인</div>
+        </div>
+    </div>
+    <div class="tg-body">
+        <div class="tg-msg">
+            <b>업무포털 메인 공지</b>
+            <div class="t">설명회 안내</div>
+            <div class="d">등록일 2026-09-21 · 게시글 75929</div>
+            <div class="tm">09:05</div>
+        </div>
+        {!compact && (
+            <div class="tg-msg">
+                <b>RSS 보험인정기준 - 치료재료</b>
+                <div class="t">치료재료 급여기준 일부 개정 안내</div>
+                <div class="d">게시일 2026-09-22</div>
+                <div class="tm">09:05</div>
+            </div>
+        )}
+        <div class="tg-msg">
+            <b>e-Form 공지사항</b>
+            <div class="t">요양급여비용 청구 서식 변경 안내</div>
+            <div class="d">작성일 2026-09-22 · <a href="https://ef.hira.or.kr/efweb/index.do">e-Form 열기</a></div>
+            <div class="tm">09:10</div>
+        </div>
+    </div>
+</div>

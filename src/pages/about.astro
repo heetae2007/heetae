@@ -1,0 +1,59 @@
+---
+import Base from "../layouts/Base.astro";
+import PageTop from "../components/PageTop.astro";
+import Detail from "../components/Detail.astro";
+
+const ways = [
+    ["notion", "쓰던 도구는 그대로 둡니다", "새 시스템을 들이면 사람들이 다시 배워야 합니다. 그래서 이미 쓰는 구글 시트와 노션은 그대로 두고, 그 사이를 Apps Script로 잇습니다. 시트에 적던 사람은 계속 시트에 적으면 됩니다."],
+    ["telegram", "보낸 것만 기록합니다", "고시 알리미는 텔레그램 전송이 성공한 뒤에야 ‘보냄’으로 저장합니다. 전송이 실패한 공지는 목록에서 사라져도 다음 주기에 다시 보냅니다. 놓치는 것보다 한 번 더 받는 편이 낫습니다."],
+    ["poll", "실패하면 직전 상태를 지킵니다", "사이트가 빈 목록을 돌려주거나 형식이 바뀌면, 그 결과로 기록을 덮어쓰지 않습니다. 실패로 남기고 직전 목록을 지킨 채 다음 주기를 기다립니다."],
+    ["sheet", "이름으로 찾습니다", "시트의 열 순서는 언젠가 바뀝니다. 그래서 몇 번째 열이 아니라 ‘티켓번호’, ‘요청병원’ 같은 머리글 이름으로 열을 찾습니다. 누가 열을 하나 끼워 넣어도 동기화는 그대로 돕니다."],
+];
+---
+<Base title="소개 | 감자마켓" description="병원과 심평원 사이에서 반복되는 일을 코드로 옮기는 개발자 감자(heetae2007)의 소개와 일하는 방식.">
+
+    <PageTop current="소개" title="소개" intro="병원 행정의 반복 업무를 코드로 옮기는 개발자, 감자입니다." />
+
+    <main>
+
+        <section class="section" aria-labelledby="who-title">
+
+            <h2 class="head" id="who-title" data-reveal style="margin-bottom: clamp(32px, 4vw, 56px)">감자는 누구인가</h2>
+
+            <div class="about-row">
+
+                <dl class="side-facts" data-reveal style="--i:1">
+                    <div><dt>이름</dt><dd>감자 (heetae2007)</dd></div>
+                    <div><dt>일하는 곳</dt><dd>병원과 심평원 사이</dd></div>
+                    <div><dt>주로 쓰는 것</dt><dd>Python, Apps Script</dd></div>
+                    <div><dt>서버</dt><dd>Ubuntu, cron</dd></div>
+                </dl>
+
+                <div>
+                    <p class="wide-para" data-reveal style="--i:2">
+                        병원 행정에는 매일 확인해야 하는 고시, 시트에 쌓이는 요청, 답해야 할 티켓이 있습니다.
+                        감자는 그중 반복되는 부분을 하나씩 코드로 옮깁니다.
+                    </p>
+                    <p class="wide-para" data-reveal style="--i:3">
+                        이름이 감자인 이유는 단순합니다. 흙 속에서 조용히 자라다가, 캐 보면 쓸모가 있는 것. 자동화가 그렇다고 생각합니다.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="section" aria-labelledby="how-title">
+
+            <h2 class="head" id="how-title" data-reveal style="margin-bottom: clamp(48px, 6vw, 96px)">일하는 방식</h2>
+
+            <div class="details">
+                {ways.map(([screen, title, body], i) => <Detail flip={i % 2 === 1} screen={screen} title={title} body={body} />)}
+            </div>
+
+        </section>
+
+    </main>
+
+</Base>

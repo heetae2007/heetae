@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160">
+  <g id="potato">
+    <path d="M38 52c14-26 52-38 88-34 34 4 58 22 62 48 4 28-12 58-48 70-34 12-80 10-104-8C12 112 22 80 38 52z" fill="#a8865d"/>
+    <path d="M52 118c22 14 62 16 92 6 22-8 36-24 40-42-6 30-30 50-60 56-30 6-56 0-72-20z" fill="#94744f"/>
+    <ellipse cx="72" cy="58" rx="5" ry="3.5" fill="#6f5539"/>
+    <ellipse cx="128" cy="44" rx="4" ry="3" fill="#6f5539"/>
+    <ellipse cx="150" cy="86" rx="5" ry="3.5" fill="#6f5539"/>
+    <ellipse cx="98" cy="96" rx="4.5" ry="3" fill="#6f5539"/>
+    <ellipse cx="56" cy="96" rx="3.5" ry="2.5" fill="#6f5539"/>
+  </g>
+</svg>
