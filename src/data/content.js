@@ -8,6 +8,19 @@ export const profile = {
   email: "heetae2007@gmail.com",
 };
 
+// 히어로 오른쪽 터미널에 보이는 crontab과 실행 로그
+export const cron = [
+  ["*/5 * * * *", "hira_watch.py"],
+  ["0 9 * * 1-5", "sheet_to_notion.gs"],
+  ["*/10 * * * *", "zendesk_triage.py"],
+];
+
+export const cronLog = [
+  ["09:00", "✓", "티켓 14건 → notion"],
+  ["09:05", "✓", "새 고시 2건 → telegram"],
+  ["09:10", "·", "분류 대기 3건"],
+];
+
 export const about = [
   "ezcaretech 클라우드 HIS 서비스 운영/개발팀에서 일하고 있습니다. 매일 같은 화면을 반복해서 확인하는 일을 보면, 자동화로 덜어낼 방법부터 찾습니다.",
   "심평원 고시 확인, 시트에 흩어진 티켓 정리, 반복되는 문의 분류처럼 작지만 매일 쌓이는 업무를 코드로 옮기는 것을 좋아합니다.",
@@ -60,6 +73,7 @@ export const projects = [
     summary:
       "병원에서 들어오는 Zendesk 티켓을 분류하고 반복 문의를 자동으로 태깅해, 사람이 답해야 할 티켓에 시간을 쓰도록 만드는 중입니다.",
     stack: ["Python", "Zendesk API"],
+    wip: true,
     repo: "https://github.com/heetae2007/zendesk_auto",
   },
 ];
