@@ -10,9 +10,9 @@ export const profile = {
 
 // 히어로 오른쪽 터미널에 보이는 crontab과 실행 로그
 export const cron = [
-  ["*/5 * * * *", "hira_watch.py"],
-  ["0 9 1 * *", "edi_master_sync.js"],
   ["* * * * *", "zendesk_auto.py"],
+  ["0 9 1 * *", "edi_master_sync.js"],
+  ["*/5 * * * *", "hira_watch.py"],
 ];
 
 export const cronLog = [
@@ -57,23 +57,22 @@ export const projects = [
     summary:
       "신규 Zendesk 문의를 1분마다 조회해 Claude로 요약·파트·세부업무를 분류하고, 기준표에 따라 개발 담당자와 당일 PIS 담당자를 정해 텔레그램으로 알려주는 자동 접수 도구.",
     stack: ["Python", "FastAPI", "Claude", "Zendesk API"],
-    wip: true,
     repo: "https://github.com/heetae2007/zendesk_auto",
   },
   {
     order: "02",
-    title: "심평원 고시 알리미",
-    summary:
-      "건강보험심사평가원(HIRA)의 RSS, 요양기관 업무포털, e-Form 공지사항을 5분마다 확인해 새 글만 텔레그램으로 알려주는 자동화 서버.",
-    stack: ["Python", "Playwright", "SQLite", "Telegram"],
-    repo: "https://github.com/heetae2007/Hira_Web_Crawler",
-  },
-  {
-    order: "03",
     title: "수가 속성 자동분류 (EDI코드 분류 점검)",
     summary:
       "병원 AS-IS 수가 엑셀을 심평원 수가마스터(약 300만 행)와 대조해 행위·약제·치료재료 분류를 점검하고, 원본 서식 그대로 엑셀로 내보내는 도구.",
     stack: ["Node.js", "MySQL", "SheetJS"],
     repo: "https://github.com/heetae2007/edicode_classification",
+  },
+  {
+    order: "03",
+    title: "심평원 고시 알리미",
+    summary:
+      "건강보험심사평가원(HIRA)의 RSS, 요양기관 업무포털, e-Form 공지사항을 5분마다 확인해 새 글만 텔레그램으로 알려주는 자동화 서버.",
+    stack: ["Python", "Playwright", "SQLite", "Telegram"],
+    repo: "https://github.com/heetae2007/Hira_Web_Crawler",
   },
 ];
